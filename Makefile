@@ -9,11 +9,11 @@ lem/%.txt: txt/%.txt
 	test -d lem || mkdir -p lem
 	mystem -n -l -d $< > $@
 
-w2v/%.300.bin: lem/%.all.csv
+w2v/%.300.tsv: lem/%.all.txt
 	test -d w2v || mkdir -p w2v
-	word2vec -train $< -output $@ -size 300 -window 5 -binary 1 -cbow 0
+	word2vec -train $< -output $@ -size 300 -window 5 -binary 0 -cbow 0
 
-all: lemmatize
+all: extract lemmatize convocations-txt w2v-convocations
 
 unzip: $(csvs)
 
@@ -26,4 +26,4 @@ lemmatize: $(patsubst txt/%.txt,lem/%.txt,$(wildcard txt/*.txt))
 convocations-txt: lemmatize
 	for c in $(convocations); do cat lem/$$c.[0-9]*.txt > lem/$$c.all.txt ; done 
 
-w2v-convocations: $(patsubst %,w2v/%.300.bin,$(convocations))
+w2v-convocations: $(patsubst %,w2v/%.300.tsv,$(convocations))
