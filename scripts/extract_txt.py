@@ -6,7 +6,7 @@ import re
 import os
 
 
-datere = re.compile('(?P<dd>[0-3][0-9])/(?P<mm>)[01][0-9])/(?P<yyyy>[12][0-9][0-9][0-9])')
+datere = re.compile('(?P<dd>[0-3][0-9])/(?P<mm>[01][0-9])/(?P<yyyy>[12][0-9][0-9][0-9])')
 csv.field_size_limit(sys.maxsize)
 
 with open(sys.argv[1], 'r') as csvfile:
